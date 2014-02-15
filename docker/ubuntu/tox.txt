@@ -1,0 +1,4 @@
+py26
+py27
+py33
+sitepackages
