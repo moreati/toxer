@@ -12,7 +12,7 @@ if sys.version_info[:2] == (2, 6):
 
 setup(
     name='toxer',
-    version='0.1.0',
+    version='0.1.1',
     packages=find_packages(exclude=("test.*",)),
 
     entry_points={
