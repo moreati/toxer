@@ -17,8 +17,8 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'toxer = toxer:main',
-            'toxer-build = toxer:build_images',
+            'toxer = toxer.cli:main',
+            'toxer-build = toxer.cli:build_images',
         ],
     },
 

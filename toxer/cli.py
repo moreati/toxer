@@ -63,15 +63,14 @@ def main():
     else:
         all_distr = config['images'].keys()
 
-    last_dist_command = None
     for image, info in config['images'].items():
+
+        if not image in all_distr:
+            continue
 
         print('*' * 60)
         print(image)
         print('*' * 60)
-
-        if not image in all_distr:
-            continue
 
         cmd = 'docker run -w "/code" -e "TOX_DOCKER=1" -e "TOX_DISTRO=%s" -v %s:/code -i -t %s' % (
             info['image'], os.getcwd(), info['image'])
@@ -87,8 +86,6 @@ def main():
             print('Skip %s as there is no env needed [%s]' % (image, ','.join(envs)))
             continue
 
-        last_dist_command = cmd
-
         cmd += ' tox -c tox.toxer.ini -e %s' % (','.join(env_to_run))
 
         if args.cov:
@@ -98,7 +95,14 @@ def main():
         print(cmd)
 
     if args.cov:
-        os.system('%s coverage combine' % last_dist_command)
-        os.system('%s coverage html --include="%s/*" -d %s' % (
-            last_dist_command, config['packages']['code'], args.coverage_dir))
+
+        print('collecting coverage.')
+
+        cmd = 'docker run -w "/code" -v %s:/code -i -t %s' % (
+            os.getcwd(), config['coverage']['image'])
+
+        os.system('%s coverage combine' % cmd)
+        os.system('%s coverage html --include="%s/*" -d %s' % (cmd, config['packages']['code'], args.coverage_dir))
+
+        print('Coverage link: file://%s/%s/index.html' % (os.getcwd(), args.coverage_dir))
 
