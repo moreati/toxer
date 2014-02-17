@@ -32,7 +32,17 @@ def main():
     parser.add_argument('--cov', action='store_true', default=False)
     parser.add_argument('--dist', default=False)
     parser.add_argument('--env', default=False)
+    parser.add_argument('-m', '--marks', default=False)
+    parser.add_argument('-s', action='store_true', default=False)
     parser.add_argument('--coverage-dir', default='coverage_html')
+
+    parser.add_argument('--no-large', default=False)
+    parser.add_argument('--no-medium', default=False)
+
+    parser.add_argument('--large', default=False)
+    parser.add_argument('--medium', default=False)
+    parser.add_argument('--small', default=False)
+
     args = parser.parse_args()
 
     with open('toxer.yml') as f:
@@ -88,11 +98,16 @@ def main():
 
         cmd += ' tox -c tox.toxer.ini -e %s' % (','.join(env_to_run))
 
+        cmd += ' --'
+
         if args.cov:
-            cmd += ' -- --cov-config .tox.coveragerc --cov %s' % config['packages']['code']
+            cmd += ' --cov-config .tox.coveragerc --cov %s' % config['packages']['code']
+
+        if args.s:
+            cmd += ' -s'
 
         os.system(cmd)
-        print(cmd)
+        print cmd
 
     if args.cov:
 

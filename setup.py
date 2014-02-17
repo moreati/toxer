@@ -12,7 +12,7 @@ if sys.version_info[:2] == (2, 6):
 
 setup(
     name='toxer',
-    version='0.1.1',
+    version='0.1.3',
     packages=find_packages(exclude=("test.*",)),
 
     entry_points={
@@ -27,7 +27,7 @@ setup(
     author='Aleksandr Rudakov',
     author_email='ribozz@gmail.com',
     description='Run your tox tests inside docker with different linux distributions.',
-    long_description=open('README.md').read(),
+    long_description='',
     install_requires=deps,
 
     # cmdclass={'test': PyTest},

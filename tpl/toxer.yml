@@ -1,0 +1,22 @@
+
+images:
+  ubuntu:
+    image: pywizard/test_ubuntu
+    envs:
+      - py26
+      - py27
+      - py33
+      - sitepackages
+
+  centos:
+    image: pywizard/test_centos
+    envs:
+      - py26
+      - sitepackages
+
+packages:
+  code: pywizard
+  tests: test
+
+coverage:
+  image: pywizard/test_ubuntu
